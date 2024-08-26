@@ -170,8 +170,8 @@ export default class WeixinAdapter {
         share_video_id0: '',
         dot0: '{}',
         share_voice_id0: '',
-        insert_ad_mode0: '',
-        categories_list0: '[]',
+        insert_ad_mode0: '2',
+        categories_list0: '["50","47","28","55","56","39","8","1","64","66","35","29","5","31","6","63","59","51","7","57","46","41","24","37","42","58","61","62","48","65","36","60","21","43","16","2","17","67","68"]',
         sections0:
           '[{"section_index":1000000,"text_content":"​kkk","section_type":9,"ad_available":false}]',
         compose_info0:
