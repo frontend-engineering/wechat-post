@@ -15,8 +15,8 @@ export default class WeixinAdapter {
     code = code.substring(code.indexOf('window.wx.commonData'))
     var wx = new Function(
       'window.wx = {}; window.handlerNickname = function(){};' +
-        code +
-        '; return window.wx;'
+      code +
+      '; return window.wx;'
     )()
     console.log(code, wx)
     var commonData = Object.assign({}, wx.commonData)
@@ -47,15 +47,15 @@ export default class WeixinAdapter {
     }
   }
 
-  async searchAccount({ keyword, begin=0, count=5 }) {
+  async searchAccount({ keyword, begin = 0, count = 5 }) {
     var token = weixinMetaCache.token || '442135330'
     const apiURL = `https://mp.weixin.qq.com/cgi-bin/searchbiz?action=search_biz&begin=${begin}&count=${count}&query=${encodeURIComponent(keyword)}&token=${token}&lang=zh_CN&f=json&ajax=1`
     const response = await $.get(apiURL)
     return response
   }
 
-  async listArticle({ fakeid = '', begin=0, count=5}) {
-  	var token = weixinMetaCache.token || '442135330'
+  async listArticle({ fakeid = '', begin = 0, count = 5 }) {
+    var token = weixinMetaCache.token || '442135330'
     const apiURL = `https://mp.weixin.qq.com/cgi-bin/appmsg?action=list_ex&begin=${begin}&count=${count}&fakeid=${fakeid}&type=9&query=&token=${token}&lang=zh_CN&f=json&ajax=1`
     const response = await $.get(apiURL)
     return response
@@ -73,10 +73,10 @@ export default class WeixinAdapter {
     var post = {}
 
     const allMetas = doc
-      .filter(function(index, el) {
+      .filter(function (index, el) {
         return $(el).attr('property') && $(el).attr('content')
       })
-      .map(function() {
+      .map(function () {
         return {
           name: $(this).attr('property'),
           content: $(this).attr('content'),
@@ -172,6 +172,7 @@ export default class WeixinAdapter {
         share_voice_id0: '',
         insert_ad_mode0: '2',
         categories_list0: '["50","47","28","55","56","39","8","1","64","66","35","29","5","31","6","63","59","51","7","57","46","41","24","37","42","58","61","62","48","65","36","60","21","43","16","2","17","67","68"]',
+        incontent_ad_count0: '2',
         sections0:
           '[{"section_index":1000000,"text_content":"​kkk","section_type":9,"ad_available":false}]',
         compose_info0:
@@ -203,7 +204,7 @@ export default class WeixinAdapter {
   async uploadFile(file) {
     var formdata = new FormData()
     var blob = new Blob([file.bits], {
-        type: file.type
+      type: file.type
     });
 
     formdata.append('type', blob.type)
@@ -215,7 +216,7 @@ export default class WeixinAdapter {
 
     var ticket_id = this.meta.commonData.data.user_name,
       ticket = this.meta.commonData.data.ticket,
-      svr_time =  this.meta.commonData.data.time,
+      svr_time = this.meta.commonData.data.time,
       token = this.meta.commonData.data.t,
       seq = new Date().getTime();
 
@@ -226,7 +227,7 @@ export default class WeixinAdapter {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
     var url = res.data.cdn_url
-    if(res.data.base_resp.err_msg != 'ok') {
+    if (res.data.base_resp.err_msg != 'ok') {
       console.log(res.data);
       throw new Error('upload failed')
     }
@@ -297,7 +298,7 @@ export default class WeixinAdapter {
         // tag.after("<p><br></p>");
         // span.css("color", "rgb(68, 68, 68)");
         // span.css("font-size", "16px");
-      } catch (e) {}
+      } catch (e) { }
     }
 
     var tags = doc.find('img')
@@ -308,7 +309,7 @@ export default class WeixinAdapter {
         tag.removeAttr('_src')
         tag.attr('style', '')
         wraperTag.replaceWith('<p>' + wraperTag.html() + '</p>')
-      } catch (e) {}
+      } catch (e) { }
     }
 
     var pres = doc.find('a')
@@ -316,7 +317,7 @@ export default class WeixinAdapter {
       const pre = pres.eq(mindex)
       try {
         pre.after(pre.html()).remove()
-      } catch (e) {}
+      } catch (e) { }
     }
 
     var processEmptyLine = function (idx, el) {
@@ -325,7 +326,7 @@ export default class WeixinAdapter {
       var img = $obj.find('img')
       var brs = $obj.find('br')
       if (originalText == '') {
-        ;(function () {
+        ; (function () {
           if (img.length) return
           if (!brs.length) return
           $obj.remove()
@@ -353,8 +354,8 @@ export default class WeixinAdapter {
     post.content = $('<div>')
       .append(
         "<section style='margin-left: 6px;margin-right: 6px;line-height: 1.75em;'>" +
-          doc.clone().html() +
-          '</section>'
+        doc.clone().html() +
+        '</section>'
       )
       .html()
 
@@ -495,16 +496,16 @@ function formatError(e) {
       index: !1,
     }
   switch (
-    ('undefined' != typeof e.ret
-      ? (r = 1 * e.ret)
-      : e.base_resp &&
-        'undefined' != typeof e.base_resp.ret &&
-        (r = 1 * e.base_resp.ret),
+  ('undefined' != typeof e.ret
+    ? (r = 1 * e.ret)
+    : e.base_resp &&
+    'undefined' != typeof e.base_resp.ret &&
+    (r = 1 * e.base_resp.ret),
     1 * r)
   ) {
     case -8:
     case -6:
-      ;(e.ret = '-6'), (a.errmsg = '请输入验证码')
+      ; (e.ret = '-6'), (a.errmsg = '请输入验证码')
       break
 
     case 62752:
@@ -657,35 +658,35 @@ function formatError(e) {
       break
 
     case 10801:
-      ;(a.errmsg =
+      ; (a.errmsg =
         '标题不能有违反公众平台协议、相关法律法规和政策的内容，请重新编辑。'),
         (a.index = 1 * e.msg)
       break
 
     case 10802:
-      ;(a.errmsg =
+      ; (a.errmsg =
         '作者不能有违反公众平台协议、相关法律法规和政策的内容，请重新编辑。'),
         (a.index = 1 * e.msg)
       break
 
     case 10803:
-      ;(a.errmsg = '敏感链接，请重新添加。'), (a.index = 1 * e.msg)
+      ; (a.errmsg = '敏感链接，请重新添加。'), (a.index = 1 * e.msg)
       break
 
     case 10804:
-      ;(a.errmsg =
+      ; (a.errmsg =
         '摘要不能有违反公众平台协议、相关法律法规和政策的内容，请重新编辑。'),
         (a.index = 1 * e.msg)
       break
 
     case 10806:
-      ;(a.errmsg =
+      ; (a.errmsg =
         '正文不能有违反公众平台协议、相关法律法规和政策的内容，请重新编辑。'),
         (a.index = 1 * e.msg)
       break
 
     case 10808:
-      ;(a.errmsg =
+      ; (a.errmsg =
         '推荐语不能有违反公众平台协议、相关法律法规和政策的内容，请重新编辑。'),
         (a.index = 1 * e.msg)
       break
@@ -731,17 +732,17 @@ function formatError(e) {
       break
 
     case 13002:
-      ;(a.errmsg = '该广告卡片已过期，删除后才可保存成功'),
+      ; (a.errmsg = '该广告卡片已过期，删除后才可保存成功'),
         (a.index = 1 * e.msg)
       break
 
     case 13003:
-      ;(a.errmsg = '已有文章插入过该广告卡片，一个广告卡片仅可插入一篇文章'),
+      ; (a.errmsg = '已有文章插入过该广告卡片，一个广告卡片仅可插入一篇文章'),
         (a.index = 1 * e.msg)
       break
 
     case 13004:
-      ;(a.errmsg = '该广告卡片与图文消息位置不一致'), (a.index = 1 * e.msg)
+      ; (a.errmsg = '该广告卡片与图文消息位置不一致'), (a.index = 1 * e.msg)
       break
 
     case 15801:

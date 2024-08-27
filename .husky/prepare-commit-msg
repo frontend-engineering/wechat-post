@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
-
+export PATH=":/usr/bin/:$PATH"
 exec < /dev/tty && yarn cz --hook || true
