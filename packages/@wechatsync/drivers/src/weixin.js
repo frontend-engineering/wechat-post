@@ -129,7 +129,7 @@ export default class WeixinAdapter {
         digest0: post.post_title,
         auto_gen_digest0: '1',
         content0: post.post_content,
-        sourceurl0: 'http://wms.webinfra.cloud',
+        sourceurl0: 'https://wms.webinfra.cloud',
         need_open_comment0: '1',
         only_fans_can_comment0: '0',
         cdn_url0: '',
