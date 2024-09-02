@@ -100,6 +100,8 @@ export default class WeixinAdapter {
 
   async editPost(post_id, post) {
     console.log('editPost', post.post_thumbnail)
+    const isTuWenType = !!post.isTuWenType;
+
     var res = await $.ajax({
       url:
         'https://mp.weixin.qq.com/cgi-bin/operate_appmsg?t=ajax-response&sub=create&type=77&token=' +
@@ -121,7 +123,7 @@ export default class WeixinAdapter {
         ad_video_transition0: '',
         can_reward0: '0',
         related_video0: '',
-        is_video_recommend0: '-1',
+        is_video_recommend0: isTuWenType ? '0' : '-1',
         title0: post.post_title,
         author0: '只冲WMS',
         writerid0: '0',
@@ -129,14 +131,18 @@ export default class WeixinAdapter {
         digest0: post.post_title,
         auto_gen_digest0: '1',
         content0: post.post_content,
-        sourceurl0: 'https://wms.webinfra.cloud',
+        sourceurl0: isTuWenType ? '' : 'https://wms.webinfra.cloud',
         need_open_comment0: '1',
         only_fans_can_comment0: '0',
+        last_choose_cover_from0: '0',
         cdn_url0: '',
         cdn_235_1_url0: '',
+        cdn_16_9_url0: '',
+        cdn_3_4_url0: '',
         cdn_1_1_url0: '',
         cdn_url_back0: '',
         crop_list0: '',
+        app_cover_auto0: '1',
         music_id0: '',
         video_id0: '',
         voteid0: '',
@@ -165,12 +171,13 @@ export default class WeixinAdapter {
         source_article_type0: '',
         reprint_recommend_title0: '',
         reprint_recommend_content0: '',
-        share_page_type0: '0',
+        share_page_type0: isTuWenType ? '10' : '0',
+        new_pic_process0: isTuWenType ? '1' : '',
         share_imageinfo0: '{"list":[]}',
         share_video_id0: '',
         dot0: '{}',
         share_voice_id0: '',
-        insert_ad_mode0: '2',
+        insert_ad_mode0: isTuWenType ? '0' : '2',
         categories_list0: '["50","47","28","55","56","39","8","1","64","66","35","29","5","31","6","63","59","51","7","57","46","41","24","37","42","58","61","62","48","65","36","60","21","43","16","2","17","67","68"]',
         incontent_ad_count0: '2',
         sections0:
