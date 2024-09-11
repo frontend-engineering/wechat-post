@@ -290,7 +290,7 @@ class Syner {
         })()
       }
       if (request.action && request.action == 'addTask') {
-        console.log(request)
+        console.log('---addTask: ', request)
         request.task.status = 'wait'
         request.task.guid = getGuid()
         db.addTask(request.task)
@@ -316,7 +316,7 @@ class Syner {
       }
 
       if (request.action && request.action == 'parseArticle') {
-        console.log(request)
+        console.log('-----parseArticle',request)
         ;(async () => {
           var driver = getDriver(request.account)
           try {
@@ -332,7 +332,7 @@ class Syner {
       }
 
       if (request.action && request.action == 'getCache') {
-        console.log(request)
+        console.log('-----getCache',request)
         ;(async () => {
           chrome.storage.local.get(request.names ? request.names : [request.name], function(
             result
@@ -346,7 +346,7 @@ class Syner {
       }
 
       if (request.action && request.action == 'setCache') {
-        console.log(request)
+        console.log('-----setCache: ',request)
         ;(async () => {
           var d = {}
           d[request.name] = request.value
@@ -358,7 +358,7 @@ class Syner {
       }
 
       if (request.action && request.action == 'sendEvent') {
-        console.log(request)
+        console.log('-----sendEvent: ',request)
         ;(async () => {
           try {
             var event = request.event
@@ -381,7 +381,7 @@ class Syner {
       }
 
       if (request.action && request.action == 'updateDriver') {
-        console.log('updateDriver', request);
+        console.log('updateDriver: ', request);
         (async () => {
           try {
             var isDevelopment = request.data.dev;
@@ -477,7 +477,7 @@ class Syner {
       }
 
       if (request.action && request.action == 'callDriverMethod') {
-        console.log(request)
+        console.log('----callDriverMethod',request)
         ;(async () => {
           try {
             var driver = getDriver(request.data.account )
@@ -647,6 +647,7 @@ class Syner {
   }
 
   async doSync(account, currentTask) {
+    console.log('doSync: ', account, 'currentTask: ', currentTask)
     var driver = getDriver(account)
     var postId
     account.status = 'uploading'
@@ -832,7 +833,7 @@ class Syner {
       accounts: currentTask.accounts,
     })
 
-    console.log('editResp status')
+    console.log('editResp status: ',editResp)
     if (editResp.status == 'success') {
       db.editTask(currentTask.tid, {
         status: 'done',
@@ -842,7 +843,7 @@ class Syner {
   }
 }
 
-console.log('background.js')
+console.log('----background.js')
 function afterDriver() {
   var syncer = new Syner()
   window.syncer = syncer

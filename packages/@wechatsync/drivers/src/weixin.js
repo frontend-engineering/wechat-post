@@ -36,7 +36,7 @@ export default class WeixinAdapter {
       icon: 'https://mp.weixin.qq.com/favicon.ico',
     }
     weixinMetaCache = metadata
-    console.log('weixinMetaCache', weixinMetaCache)
+    console.log('---weixinMetaCache', weixinMetaCache)
     return metadata
   }
 
@@ -99,7 +99,7 @@ export default class WeixinAdapter {
   }
 
   async editPost(post_id, post) {
-    console.log('editPost', post.post_thumbnail)
+    console.log('----editPost:', post.post_thumbnail)
     const isTuWenType = !!post.isTuWenType;
 
     var res = await $.ajax({
@@ -184,7 +184,7 @@ export default class WeixinAdapter {
           '[{"section_index":1000000,"text_content":"​kkk","section_type":9,"ad_available":false}]',
         compose_info0:
           '{"list":[{"blockIdx":1,"content":"<p>​kkk<br></p>","width":574,"height":27,"topMargin":0,"blockType":9,"background":"rgba(0, 0, 0, 0)","text":"kkk","textColor":"rgb(51, 51, 51)","textFontSize":"17px","textBackGround":"rgba(0, 0, 0, 0)"}]}',
-        appmsg_album_info0: '{"appmsg_album_infos":[{"title":"仓库管理","id":"3523828685557956612","tagSource":4},{"title":"WMS","id":"3522981900325191684","tagSource":4},{"title":"智能制造","id":"3522981899721211910","tagSource":4}]}'
+        appmsg_album_info0: isTuWenType ? '{"appmsg_album_infos":[{"title":"仓库管理","id":"3631267723793006592","tagSource":1}]}' : '{"appmsg_album_infos":[{"title":"仓库管理","id":"3523828685557956612","tagSource":4},{"title":"WMS","id":"3522981900325191684","tagSource":4},{"title":"智能制造","id":"3522981899721211910","tagSource":4}]}'
       },
     })
 
