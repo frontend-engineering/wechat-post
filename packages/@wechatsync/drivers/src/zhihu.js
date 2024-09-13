@@ -82,7 +82,7 @@ export default class ZhiHuAdapter {
         // content: post.post_content
       }),
     })
-    console.log(res)
+    console.log('addPost',res)
     return {
       status: 'success',
       post_id: res.id,
@@ -90,8 +90,25 @@ export default class ZhiHuAdapter {
     //
   }
 
+  postTopic(post_id, topic) {
+    return $.ajax({
+      url: 'https://zhuanlan.zhihu.com/api/articles/' + post_id + '/topics',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        avatarUrl: topic.avatarUrl,
+        excerpt: "",
+        introduction: "",
+        id: topic.id,
+        name: topic.name,
+        type: "topic",
+        url: topic.url
+      }),
+    });
+  }
+
   async editPost(post_id, post) {
-    console.log('editPost', post.post_thumbnail)
+    console.log('editPost: ', post.post_thumbnail)
     var res = await $.ajax({
       url: 'https://zhuanlan.zhihu.com/api/articles/' + post_id + '/draft',
       type: 'PATCH',
@@ -100,9 +117,35 @@ export default class ZhiHuAdapter {
         title: post.post_title,
         content: post.post_content,
         isTitleImageFullScreen: false,
-        titleImage: 'https://pic1.zhimg.com/' + post.post_thumbnail + '.png',
+        titleImage: ''
+        //titleImage: 'https://pic1.zhimg.com/' + post.post_thumbnail + '.png',
       }),
     })
+
+    const topics = [
+      {
+        avatarUrl: "https://picx.zhimg.com/80/v2-b1b163b8f91888a3103319eb8cf6830b_l.jpg?source=4e949a73",
+        id: "20205792",
+        name: "智能制造",
+        url: "https://www.zhihu.com/topic/20205792"
+      },
+      {
+        avatarUrl: "https://picx.zhimg.com/80/v2-b1b163b8f91888a3103319eb8cf6830b_l.jpg?source=4e949a73",
+        id: "19799248",
+        name: "仓储管理",
+        url: "https://www.zhihu.com/topic/19799248"
+      },
+      {
+        avatarUrl: "https://picx.zhimg.com/80/v2-b1b163b8f91888a3103319eb8cf6830b_l.jpg?source=4e949a73",
+        id: "19601374",
+        name: "库存管理",
+        url: "https://www.zhihu.com/topic/19601374"
+      }
+    ];
+
+    // 使用 Promise.all 同时发送三个请求
+    const results = await Promise.all(topics.map(topic => this.postTopic(post_id, topic)));
+    console.log('editPost topic:', results);
 
     return {
       status: 'success',
@@ -377,7 +420,7 @@ export default class ZhiHuAdapter {
   }
 
   addPromotion(post) {
-    var sharcode = `<blockquote><p>本文使用 <a href="https://zhuanlan.zhihu.com/p/358098152" class="internal">文章同步助手</a> 同步</p></blockquote>`
-    post.content = post.content.trim() + `${sharcode}`
+    //var sharcode = `<blockquote><p>本文使用 <a href="https://zhuanlan.zhihu.com/p/358098152" class="internal">文章同步助手</a> 同步</p></blockquote>`
+    //post.content = post.content.trim() + `${sharcode}`
   }
 }
