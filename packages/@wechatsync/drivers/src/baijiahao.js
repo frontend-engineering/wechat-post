@@ -48,7 +48,7 @@ export default class BaiJiaHaoAdapter {
     const authToken = pageHtml.substring(authIndex + markStr.length, pageHtml.indexOf('",window.__BJH__EDIT_', authIndex))
 
 
-
+    console.log('-----------editPost content: ', post.post_content)
 
     const postStruct = {
       title: post.post_title,
@@ -59,8 +59,13 @@ export default class BaiJiaHaoAdapter {
         {
         	id: 408,
           is_checked: 0
+        },
+        {
+        	id: 'reward',
+          is_checked: 1
         }
       ],
+      cate_user_cms: ['科技','信息技术'],
       source_reprinted_allow: 0,
       original_status: 0,
       original_handler_status: 1,
@@ -139,7 +144,9 @@ export default class BaiJiaHaoAdapter {
           ? tempDoc.children('div').html()
           : tempDoc.html()
 
-      console.log('after.predEdit', post.content)
+      // 正则表达式匹配并删除最后一个 <style> 标签及其内容
+      post.content = post.content.replace(/<style[\s\S]*?<\/style>/gi, '');
+      console.log('after.predEdit: ', post.content)
     } catch (e) {
       console.log('preEdit.error', e)
     }
