@@ -108,7 +108,7 @@ export default class ZhiHuAdapter {
   }
 
   async editPost(post_id, post) {
-    console.log('editPost: ', post.post_thumbnail)
+    console.log('------editPost: ', post)
     var res = await $.ajax({
       url: 'https://zhuanlan.zhihu.com/api/articles/' + post_id + '/draft',
       type: 'PATCH',
@@ -117,8 +117,8 @@ export default class ZhiHuAdapter {
         title: post.post_title,
         content: post.post_content,
         isTitleImageFullScreen: false,
-        titleImage: ''
-        //titleImage: 'https://pic1.zhimg.com/' + post.post_thumbnail + '.png',
+        //titleImage: post.thumb
+        titleImage: 'https://picx.zhimg.com/' + post.post_thumbnail + '.png',
       }),
     })
 
